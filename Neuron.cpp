@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -69,10 +70,10 @@ double Neuron::newMembranePotential(double h, double I)
 	return membranePotential;
 }
 	
-void Neuron::show(vector<double> vec)
+void Neuron::show(vector<double> vec, ofstream& out)
 {
 	for(size_t i(0) ; i < vec.size() ; ++i) {
-		cout << vec[i] << "  " ;
+		out << vec[i] << "  " ;
 	}
 }
 
