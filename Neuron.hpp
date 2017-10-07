@@ -8,7 +8,7 @@
 constexpr double taurp(2.0); //constant of time of the repository period
 constexpr double tau(20.0); //constant of time 
 constexpr double C(1.0); //capacity, connections received by each neuron
-constexpr double R(tau/C); //resistance
+constexpr double R(tau/C); //resistance of the neuron
 
 enum State {REFRACTORY, NON_REFRACTORY}; // states in which the neuron can be
 
@@ -28,7 +28,7 @@ class Neuron {
 	void setState(State st);
 	
 	void updateState(double t, size_t i); //updates the state of the neuron
-	void storeSpikesTime(double t); //store in spikesOccured the times at which the spikes occured
+	void storeSpikesTime(double t); //stores in spikesOccured the times at which the spikes occured
 	double newMembranePotential(double h, double I); //recalculates the menbrane potential at time t+h
 	
 	void show(std::vector<double> vec, std::ofstream& out); //shows what a vector contains
@@ -39,7 +39,7 @@ class Neuron {
 	double membranePotential; 
 	double spikes; //number of spikes
 	std::vector<double> spikesOccured; //time when the spikes occured
-	State state;
+	State state; //state of the neuron 
 	 
 };
 
