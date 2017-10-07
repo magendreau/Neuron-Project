@@ -1,6 +1,7 @@
 #include "Neuron.hpp"
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -48,11 +49,23 @@ int main()
 		t = t+h;
 	}
 	
-	cout << "Number of spikes : " << neuron.getSpikes() << endl;
+	ofstream file;
+	file.open("NeuronInfos.txt");
+	if(file.fail()) { 
+		cerr << "Error opening text file" << endl; 
+	} else {
+		file << "Number of spikes : " << neuron.getSpikes() << endl;
+		file << "Times when spikes occured : ";
+		neuron.show(neuron.getSpikesOccured());
+		file << endl;
+		file << "Membrane potential is : " << neuron.getMembranePotential() << endl;
+	}
+	
+	/*cout << "Number of spikes : " << neuron.getSpikes() << endl;
 	cout << "Times when spikes occured : " ;
 	neuron.show(neuron.getSpikesOccured());
 	cout << endl;
-	cout << "Membrane potential is : " << neuron.getMembranePotential() << endl;
+	cout << "Membrane potential is : " << neuron.getMembranePotential() << endl;*/
 	
 	return 0;
 }
