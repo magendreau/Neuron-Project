@@ -56,7 +56,7 @@ int main()
 	} else {
 		file << "Number of spikes : " << neuron.getSpikes() << endl;
 		file << "Times when spikes occured : ";
-		neuron.show(neuron.getSpikesOccured());
+		neuron.show(neuron.getSpikesOccured(), file);
 		file << endl;
 		file << "Membrane potential is : " << neuron.getMembranePotential() << endl;
 	}
