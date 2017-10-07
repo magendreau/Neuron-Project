@@ -52,7 +52,8 @@ void Neuron::setState(State st)
 void Neuron::updateState(double t, size_t i)
 {
 	if((spikesOccured[i] <= t) and (t <= (spikesOccured[i]+taurp))) {
-		//if the time is during the refractory period
+		//if the time is during the refractory period meaning if the tim is after the previous spike time 
+		//but below the end of the refractory period
 		state = REFRACTORY;
 	} else {
 		state = NON_REFRACTORY;
@@ -61,6 +62,7 @@ void Neuron::updateState(double t, size_t i)
 
 void Neuron::storeSpikesTime(double t)
 {
+	// add to the times when spikes occured a new one
 	spikesOccured.push_back(t);
 }
 
