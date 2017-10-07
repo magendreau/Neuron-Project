@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 constexpr double taurp(2.0); //constant of time of the repository period
 constexpr double tau(20.0); //constant of time 
@@ -30,7 +31,7 @@ class Neuron {
 	void storeSpikesTime(double t); //store in spikesOccured the times at which the spikes occured
 	double newMembranePotential(double h, double I); //recalculates the menbrane potential at time t+h
 	
-	void show(std::vector<double> vec); //shows what a vector contains
+	void show(std::vector<double> vec, std::ofstream& out); //shows what a vector contains
 	
 	~Neuron();
 	
