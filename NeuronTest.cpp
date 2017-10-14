@@ -1,36 +1,69 @@
 #include "Neuron.hpp"
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 using namespace std;
 
-constexpr double t_start(0.0);
+constexpr double t_start(0.0); //start of the simulation
+constexpr unsigned int n_start(0); //first step of the simulation
 
 int main() 
 {
-	Neuron neuron;
-	double a;
-	double b;
-	double t(t_start);
+	Neuron neuron1;
+	Neuron neuron2;
+	vector<Neuron> neurons; //fire neurons
+	vector<Neuron> target; //postsynaptic neurons
 	
-	cout << "Enter times a and b between 0 ms and 1000 ms : ";
-	cin >> a;
-	cin >> b;	
+	unsigned int n(n_start); //actual step of the simulation
+	double I_ext; //external input current
+	unsigned int readOut(0); //origin of the ring buffer of each neuron
 	
+	cout << "Enter the external input I_ext : " ;
+	cin >> I_ext;
+
 	ofstream file;
 	file.open("NeuronInfos.txt");
 	
+	neurons.push_back(neuron1); 
+	target.push_back(neuron2);
+	 
 	if(file.fail()) { 
 		cerr << "Error opening text file" << endl; 
 	} else {
-		neuron.update(t,a,b,file);
-		file << "Number of spikes : " << neuron.getSpikes() << endl;
-		file << "Membrane potential is : " << neuron.getMembranePotential() << endl;
+		
+		while(n < n_stop) { //while we don't reach the total steps of the simulation
+		cout << "We are at step nb " << n << endl;
+		file << "We are at time " << n*h << endl;
+		
+			for(size_t i(0); i< neurons.size() ; ++i) { //for each fire neuron
+				(neurons[i]).setSpikes(0.0); //we reset the spikes at 0 for the counting of each step
+				(neurons[i]).update(n,I_ext);
+				if( neurons[i].getSpikes() > 0.0) { //if this neuron fired at least one spike
+					file << "Neuron 1: " << endl;
+					file << "Number of spikes : " << neurons[i].getSpikes() << endl;
+					file << "Membrane potential is : " << neurons[i].getMembranePotential() << endl;
+				}
+					
+				 if((neurons[i]).getSpikes() != 0.0) { //if this neuron fired at least one spike
+					for(size_t j(0); j < target.size() ; ++j) { //for each postsynaptic neuron
+						(target[j]).fillRingBuffer(neurons[i].getSpikes(), readOut, n); //we fill his ring buffer with the spikes he receives 
+						++readOut; //the origin of the buffer changes position
+						if((target[j]).fullBuffer(readOut)) {
+							(target[j]).receive(n, J, I_ext);
+							readOut = 0; //we reset the origin at the beginning of the buffer
+							file << "Neuron 2: " << endl;
+							file << "Membrane potential is : " << target[j].getMembranePotential() << endl;	
+						}
+					 }
+				 }
+			 }
+			 ++n; //increase of the steps of the simulation
+			 cout << endl;
+			 file << endl;
+		}
+		
 	}
-
-
-	cout << "Number of spikes : " << neuron.getSpikes() << endl;
-	cout << "Membrane potential is : " << neuron.getMembranePotential() << endl;
 	
 	return 0;
 }
