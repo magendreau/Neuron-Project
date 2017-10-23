@@ -156,3 +156,9 @@ void Neuron::testDifferencePotential(double V1)
 
 Neuron::~Neuron()
 {}
+
+
+//Class neuron has some new implemented functions which are fillRingBuffer, fullBuffer, receive  and other testing functions. I tried to implement the idea of ringBuffer using some declaration to control the size of the vector (ringBuffer) in which we constantly add some values and to try some different implementations for the function update. The value origin helps to know, by increasing it in the main, if the size of the buffer which has to be D, has been crossed, if it has the functions returns true.
+//FillRingBuffer takes the current step of the simulation and a variable ReadOut which is increased in the main. It brings back to 0 the step if it exceeds the size of the buffer and puts into the buffer the number of spikes which will be used to multiply the amplitude J in the calculation of the new membrane potential(third version of update commented).
+//In receive, the neuron calculates its new membrane potential and spikes as a response then test if the difference and increase of the membrane potential is J.
+//The testing function tests to see if the next membrane potential is the previous one +J comparing two values stored in a vector.
