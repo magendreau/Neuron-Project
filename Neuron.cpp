@@ -103,7 +103,7 @@ void Neuron::fillRingBuffer(unsigned int step)
 
 double Neuron::newMembranePotential(double I, double J)
 {
-	return (membranePotential = c1*membranePotential + J);
+	return (membranePotential = c1*membranePotential + c2*I + J);
 }
 
 Neuron::~Neuron()
