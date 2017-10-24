@@ -62,7 +62,7 @@ void Neuron::setClock(double time)
 
 void Neuron::updateState(double t)
 {
-	if(((spikesOccured <= t) and (t <= (spikesOccured+taurp)) and (spikesOccured != 0.0))) {
+	if(((spikesOccured <= t) and (t < (spikesOccured+taurp)) and (spikesOccured != 0.0))) {
 		//if the time is during the refractory period
 		state = REFRACTORY;
 	} else {
@@ -72,14 +72,14 @@ void Neuron::updateState(double t)
 
 void Neuron::update(unsigned int step, double I, bool recep)
 {	
-		updateState(step*h);
+		updateState(clock*h);
 		
 		if(state == REFRACTORY) {
 			membranePotential = 0.0; // when the neuron is refractory it's membrane potential is 0
 			
 		} else if((membranePotential >= theta)) { //if the membrane potential reaches the thresold
 			if(!recep) {
-				spikesOccured = step*h; //a spike is emitted
+				spikesOccured = clock*h; //a spike is emitted
 				cout << "A spike occured at t=" << spikesOccured << " ms" << endl;
 				++spikes;
 			}
