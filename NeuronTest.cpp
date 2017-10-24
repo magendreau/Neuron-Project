@@ -40,7 +40,7 @@ int main()
 	} else {
 		
 		while(n < n_stop) { //while we don't reach the total steps of the simulation
-		if((a < n*h) and (n*h < b)) {
+		if((a <= n*h) and (n*h <= b)) {
 			I = I_ext;
 		} else { I = 0.0; }
 		 
