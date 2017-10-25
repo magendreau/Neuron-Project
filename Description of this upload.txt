@@ -1,0 +1,8 @@
+I added to this branch the two versions (first one and new one) to treat the ring buffer. 
+The files named NeuronOldVersion still have the code from the branch two-neurons and use the delay that way. 
+The new files, called simply Neuron or NeuronTest implement the ring buffer in a new way. To store the value 
+of J as a consequence of a reception we use the modulo to make sure the size of the buffer is not crossed 
+(before it was done with a variable that was brought to 0 if the size exceeded). 
+In the main function so we first call the function to fill the buffer if a spike occured and then we update. 
+I had problems distinguishing the firing neuron and the postsynaptic one so I declared a variable (reception) 
+which is true if the neuron is postsynaptic otherwise it stays at false. The testing functions are still in the main.
