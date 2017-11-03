@@ -2,82 +2,65 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <cassert>
+#include <array>
 
 using namespace std;
 
-constexpr double t_start(0.0); //start of the simulation
-constexpr unsigned int n_start(0); //first step of the simulation
+constexpr unsigned long n_start(0); //first step of the simulation
 
 int main() 
 {
-	Neuron neuron1;
-	Neuron neuron2;
-	vector<Neuron> neurons; //fire neurons
-	vector<Neuron> target; //postsynaptic neurons
+	array<Neuron*, totalN> neurons; //vector containing the neuron that compose the network (12500)
+	Neuron n1;
+	n1.setExcitatory(true);
+	Neuron n2;
+	n2.setExcitatory(false);
+	
+	for( size_t i(0); i < neurons.size(); ++i) { //for each neuron of the network
+		if(i < excitatoryNeurons) { //if the number of neurons if lower than the number expected for excitatory neurons (10000) 
+			neurons[i] =  new Neuron(n1); //add an excitatory neuron
+		}
+		else { neurons[i] = new Neuron(n2); } //else an inhibitory one
+	}
 	
 	unsigned int n(n_start); //actual step of the simulation
-	double I_ext; //external input current
-	unsigned int readOut(0); //origin of the ring buffer of each neuron
+	double I(0.0); //external input current
 	
-	//testing vectors
-	vector <double> V(1,Vr); //vector to store the different membrane potential 
-	vector <double> T(1,0.0); //vector to store the different times of response
-	size_t indexTest(0);
-	//testing vectors
-	
-	cout << "Enter the external input I_ext : " ;
-	cin >> I_ext;
-
 	ofstream file;
-	file.open("NeuronInfos.txt");
+	file.open("Data.txt");
 	
-	neurons.push_back(neuron1); 
-	target.push_back(neuron2);
-	 
 	if(file.fail()) { 
 		cerr << "Error opening text file" << endl; 
 	} else {
 		
-		while(n < n_stop) { //while we don't reach the total steps of the simulation
-		cout << "We are at step nb " << n << endl;
-		file << "We are at time " << n*h << endl;
-		
-			for(size_t i(0); i< neurons.size() ; ++i) { //for each fire neuron
-				(neurons[i]).setSpikes(0.0); //we reset the spikes at 0 for the counting of each step
-				(neurons[i]).update(n,I_ext);
-				if( neurons[i].getSpikes() > 0.0) { //if this neuron fired at least one spike
-					file << "Neuron 1: " << endl;
-					file << "Number of spikes : " << neurons[i].getSpikes() << endl;
-					file << "Membrane potential is : " << neurons[i].getMembranePotential() << endl;
-				}
-					
-				 if((neurons[i]).getSpikes() != 0.0) { //if this neuron fired at least one spike
-					for(size_t j(0); j < target.size() ; ++j) { //for each postsynaptic neuron
-						(target[j]).fillRingBuffer(neurons[i].getSpikes(), readOut, n); //we fill his ring buffer with the spikes he receives 
-						++readOut; //the origin of the buffer changes position
-						
-						if((target[j]).fullBuffer(readOut)) { //if the delay is finished
-							++indexTest; //we increase an index to know at whitch point we are with the postsynaptic neuron
-							(target[j]).receive(n, J, I_ext);
-							readOut = 0; //we reset the origin at the beginning of the buffer
-							file << "Neuron 2: " << endl;
-							file << "Membrane potential is : " << target[j].getMembranePotential() << endl;
-							
-							//testing part for J and D
-							V.push_back((target[j]).getMembranePotential()); //we add the current potential
-							T.push_back(n*h); //we add the current time
-							(target[j]).testDifferencePotential(V, indexTest);
-							(target[j]).testDelay(T, indexTest);
-						}
-					 }
-				 }
-			 }
-			 ++n; //increase of the steps of the simulation
-			 cout << endl;
-			 file << endl;
+		for(auto p : neurons) { //for all neurons, create the connections with the others (1250 connections)
+			p->instaureConnections(neurons);
 		}
 		
+		do { //while we don't reach the total steps of the simulation
+			
+			cout << "We are at step " << n << " of the simulation" << endl;
+			
+			for(size_t ne(0); ne < neurons.size() ; ++ne) { //for each neuron
+				neurons[ne]->update(n, I, false, false); //update the neuron
+				if(neurons[ne]->getSpk()) { //if there was a spike, we write it in a file with the id of the neuron
+					file << neurons[ne]->getSpikesOccured()/h << '\t' << ne << '\n';
+				}
+			}
+			
+			++n; //increase of the steps of the simulation 
+			
+		} while(n < n_stop);
+		
 	}
+	
+	for(auto& neuron : neurons) { //for all neurons, delete the pointer
+		neuron = nullptr;
+		delete neuron;
+	}
+	
+	system("python pythonScript.py");
 	
 	return 0;
 }
