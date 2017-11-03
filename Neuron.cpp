@@ -159,28 +159,6 @@ void Neuron::update(unsigned long step, double I, bool recep, bool test)
 	++clock;
 }
 
-void Neuron::instaureConnections(array <Neuron*, totalN>& neurons)
-{
-	//connections between neurons are made and they stay the same for the whole time of the simulation
-	//connections are chosen randomly but each neuron has necessarily 1250 connections
-	// 1000 excitatory and 250 inhibitory
-	
-	random_device rd;
-	mt19937 generator(rd());
-
-	uniform_int_distribution<unsigned int> uniformExcitatory(0,excitatoryNeurons-1);
-	uniform_int_distribution<unsigned int> uniformInhibitory(excitatoryNeurons,totalN-1);
-
-		for(size_t j(0); j < excitatoryConnections; ++j) {
-			//each chosen excitatory neuron becomes a target of the present one
-			neurons[uniformExcitatory(generator)]->targets.push_back(this); 
-		}
-		for(size_t k(0); k < inhibitoryConnections; ++k) {
-			//each chosen inhibitoryneuron becomes a target of the present one
-			neurons[uniformInhibitory(generator)]->targets.push_back(this); 
-		}
-}
-	
 void Neuron::fillRingBufferOfTargets(unsigned long step)
 {
 	const unsigned int readOut = (step+D)%(D+1);

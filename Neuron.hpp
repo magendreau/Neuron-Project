@@ -36,7 +36,7 @@ constexpr int etha(2); //!< value of externalFrequency over thresold frequency
 constexpr double externalFrequency((etha/0.1)*h); //!< rate at which a neuron receives a random spike
  
 /*! \file Neuron.hpp
-    states in which the neuron can be
+ * states in which the neuron can be
 */
 enum State {REFRACTORY, NON_REFRACTORY}; 
 
@@ -69,7 +69,7 @@ class Neuron {
 	
 	
 	///////////////////////GETTERS////////////////////
-	/*! getMembarnePotential
+	/*!
 	 * Getter for the membrane potential of the neuron
 	 * @return membranePotential
      */
@@ -183,7 +183,7 @@ class Neuron {
 	
 	/*!
 	 * @param step: the simulation time at which the update must be done
-	 * @param I; the input current received by the neuron
+	 * @param I: the input current received by the neuron
 	 * @param recep: if the neuron receives or fires
 	 * @param test: tells if the function is called for a test or not
 	 * this function makes the update of the neuron based on :
@@ -192,13 +192,6 @@ class Neuron {
 	 * if the neuron is neither one nor the other case, so the next potential is calculated
      */
 	void update(unsigned long step, double I, bool recep, bool test);
-	
-	/*!
-	 * @param neurons: vector of pointers on neurons which represents the total amount of neuron in the network
-	 * instaures the connections between the neurons randomly
-	 * 1000 with excitatory ones and 250 for inhibitory
-     */
-	void instaureConnections(std::array <Neuron*, totalN>& neurons);
 	
 	/*!
 	 * @param step: the simulation time at which the update must be done

@@ -1,4 +1,5 @@
 #include "Neuron.hpp"
+#include "Network.hpp"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -11,21 +12,14 @@ constexpr unsigned long n_start(0); //first step of the simulation
 
 int main() 
 {
-	array<Neuron*, totalN> neurons; //vector containing the neuron that compose the network (12500)
-	Neuron n1;
-	n1.setExcitatory(true);
-	Neuron n2;
-	n2.setExcitatory(false);
+
 	
-	for( size_t i(0); i < neurons.size(); ++i) { //for each neuron of the network
-		if(i < excitatoryNeurons) { //if the number of neurons if lower than the number expected for excitatory neurons (10000) 
-			neurons[i] =  new Neuron(n1); //add an excitatory neuron
-		}
-		else { neurons[i] = new Neuron(n2); } //else an inhibitory one
-	}
-	
+	Network net; //network with all the neurons
 	unsigned int n(n_start); //actual step of the simulation
 	double I(0.0); //external input current
+	int ind(0); //index of each neuron, number id
+	
+	net.initializeNetwork(); //the network is initialized at 12500 neurons
 	
 	ofstream file;
 	file.open("Data.txt");
@@ -34,30 +28,26 @@ int main()
 		cerr << "Error opening text file" << endl; 
 	} else {
 		
-		for(auto p : neurons) { //for all neurons, create the connections with the others (1250 connections)
-			p->instaureConnections(neurons);
-		}
+			net.instaureConnections(); //connections between the neurons are created, 1250 connections
 		
 		do { //while we don't reach the total steps of the simulation
 			
 			cout << "We are at step " << n << " of the simulation" << endl;
+
 			
-			for(size_t ne(0); ne < neurons.size() ; ++ne) { //for each neuron
-				neurons[ne]->update(n, I, false, false); //update the neuron
-				if(neurons[ne]->getSpk()) { //if there was a spike, we write it in a file with the id of the neuron
-					file << neurons[ne]->getSpikesOccured()/h << '\t' << ne << '\n';
+			for(auto neuron : net.getNeurons() ) { //for each neuron
+				neuron->update(n, I, false, false); //gets updated
+				if(neuron->getSpk()) { //if there was a spike, we write it in a file with the id of the neuron
+					file << neuron->getSpikesOccured()/h << '\t' << ind << '\n';
 				}
+				++ind; //index of the neuron in the vector of class network
 			}
 			
+			ind = 0; //for each while we start back at zero
 			++n; //increase of the steps of the simulation 
 			
 		} while(n < n_stop);
 		
-	}
-	
-	for(auto& neuron : neurons) { //for all neurons, delete the pointer
-		neuron = nullptr;
-		delete neuron;
 	}
 	
 	system("python pythonScript.py");
