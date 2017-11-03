@@ -1,0 +1,17 @@
+In the hpp file, I declared a new vector testing and the clock 
+(local time) of the neuron, with the corresponding getters and 
+setters. 
+
+In the cpp file, the testing vector is used to store the membrane 
+potential values when the buffer is filled to be used later on in
+the testing functions of unittest.
+
+In the main part, the "testing" functions previoulsy created in the
+class Neuron are commented and I created some new test functions in 
+the unittest file.
+
+In the unittest file, The vector testing declared in Neuron.hpp is 
+called and I tried to sum all the value excpet the last one ( which
+corresponds to the time of delay) and to see if it's zero. Then for
+the last value of the vector I compare it with J to see if the delay
+was respected before the membrane potential increased.
