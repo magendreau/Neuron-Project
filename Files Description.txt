@@ -1,0 +1,25 @@
+In the cpp file, the update state gains a new condition for the
+spike time and to determine the state of the neuron as I got aware
+of the fact that the time when a spike occured is set at zero at
+the beginning by the constructor so the neuron (who started as refractory
+as well) was considered to spike at time 0ms and so it when in the 
+refractory period at first and did nothing for 2ms. So to get into the 
+refractory state the time should be different from 0.
+The function update, verifies the same conditions for the neuron and 
+fills the ringBuffer of the neuron at each time, so the value is either 
+a multiple of J_excitatory or 0. The parameter recep tells if the neuron 
+is for reception or for firing so that only neurons that fire do the spike.
+Otherwise both neurons did the spikes.
+The value of the ring buffer is added to the computation of the membrane 
+potential.
+
+In unittest, the first test verifies that the membrane potential increases 
+of J and so it compares in different cases to values and if the difference is 
+smaller than a value defined it's correct.
+The second, checks the delay. We know that neuron1 spikes at step 1925 so we update 
+neuron2 from time 1925 to 1925+Delay and its membrane potential value at the end 
+should be 0.1, so the amplitude.
+the last two functions check if the membrane potential is calculated correctly
+whith a positive (respectively) negative input.
+
+The old versions files, contain the code from the previous conception.
