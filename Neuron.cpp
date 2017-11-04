@@ -93,6 +93,7 @@ void Neuron::setExcitatory(bool excit)
 void Neuron::setRingBuffer(unsigned int index, double J)
 {
 	//increases the ringBuffer at index "index" of J
+	assert(index <= D+1);
 	ringBuffer[index] += J;
 }
 

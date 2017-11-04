@@ -42,8 +42,12 @@ enum State {REFRACTORY, NON_REFRACTORY};
 
 /*!
  * @class Neuron
- * Class that is used to model the behaviour of a neuron
- * Neurons are separated into inhibitory and excitatory but are described in the same way
+ * Class that is used to model the behaviour of a neuron.
+ * Neurons are separated into inhibitory and excitatory but are described in the same way.
+ * This class gives acces to all informations about the neuron, its state and values of local time,
+ * potential and so on. It updates the neuron at each time step based on the state of the neuron
+ * and its features at that time. It also controls the spiking and reception of inputs based on a
+ * delay that the neuron must respect.
  */
  
 class Neuron {

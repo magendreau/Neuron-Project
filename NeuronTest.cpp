@@ -12,7 +12,6 @@ constexpr unsigned long n_start(0); //first step of the simulation
 
 int main() 
 {
-
 	
 	Network net; //network with all the neurons
 	unsigned int n(n_start); //actual step of the simulation
@@ -28,12 +27,11 @@ int main()
 		cerr << "Error opening text file" << endl; 
 	} else {
 		
-			net.instaureConnections(); //connections between the neurons are created, 1250 connections
+		net.instaureConnections(); //connections between the neurons are created, 1250 connections
 		
 		do { //while we don't reach the total steps of the simulation
 			
 			cout << "We are at step " << n << " of the simulation" << endl;
-
 			
 			for(auto neuron : net.getNeurons() ) { //for each neuron
 				neuron->update(n, I, false, false); //gets updated
@@ -50,7 +48,7 @@ int main()
 		
 	}
 	
-	system("python pythonScript.py");
+	//system("python pythonScript.py");
 	
 	return 0;
 }

@@ -43,7 +43,7 @@ void Network::instaureConnections()
 	for(auto n : neurons) { //for all neurons, create the connections with the others (1250 connections)
 		
 		for(size_t j(0); j < excitatoryConnections; ++j) {
-			//each chosen excitatory neuron becomes a target of the present one
+			//each chosen excitatory neuron becomes a target of the present one(
 			neurons[uniformExcitatory(generator)]->setTargets(n); 
 		}
 		for(size_t k(0); k < inhibitoryConnections; ++k) {

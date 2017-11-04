@@ -1,6 +1,7 @@
 #include <limits.h>
 #include <iostream>
 #include "Neuron.hpp"
+#include "Network.hpp"
 #include "gtest/gtest.h"
 #include <vector>
 
@@ -85,6 +86,12 @@ namespace {
 		neuron.update(1, 1.01, false, true); //update once again (aka the time of the first spike)
 		EXPECT_EQ(neuron.getClock(), 1925);
 		EXPECT_NEAR(neuron.getSpikesOccured(), 192.4, 0.001); 
+	}
+	
+	TEST(TestNetwork, networkSize) {
+		Network net;
+		net.initializeNetwork();
+		EXPECT_EQ(net.getNeurons().size(), 12500);
 	}
 	
 }
