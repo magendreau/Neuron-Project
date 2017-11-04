@@ -1,0 +1,12 @@
+For this upload the main change is that I remade the idea of delay.
+Instead of using indexes and variables to check if the value I put in
+the buffer is still inside the buffer, I use the modulo to do it.
+This make the conception easier and the writing of functions as well.
+When I fill the ring buffer I create a variable (readOut) that is 
+step+D modulo D+1, so it represents the box where the value should be 
+after delay D resized based on the size of the buffer.
+Putting directly the value at the right place, allows us not to move 
+all values at each time steps still being able to tell that the neuron
+should only respond when the time corresponds to that box.
+In the update, the neuron reads its ring buffer at the actual time and the
+value could either be 0 or a multiple of J.
