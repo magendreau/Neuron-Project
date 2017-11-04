@@ -1,0 +1,32 @@
+In this upload I tried to implement my program for it to work for
+12500 neurons. I had problems with my previous conception where I 
+considered that each neurons chose the neurons that sent him spikes 
+and not that he chose its targets. I rivisited it and created a vector
+targets in the hpp file which contains all targets of the neuron that 
+is filled when new random connections are made in instaureConnections.
+
+Also, in this network, neurons received external noise meaning that the
+brain sends some spikes to each neurons at some rate and the number of
+spikes is random. I implemented this part in the function ExternalSpikes.
+This changes that the calculation of the new membrane potential for the
+next time takes into account this random value as well.
+To make the previous tests en delay and increment of membrane potential 
+who should be J, I created another function that does the computation 
+with no noise. That means that my update function receives another 
+parameters which tells if it is called for a test or not.
+
+With this conception, all my neurons are firing ones so my parameter
+recep is always false when update is called. As I now consider that my
+neuron decides its targets, I changed the function fillRingBufferOfTargets
+so that, based on the type of the firing neuron (excitatory or inhibitory)
+the ringBuffer increments of J_excitatory or J_inhibitory, thanks to another
+function to set the value of the Ring buffer.
+
+In the main function, I create an array of 12500 pointers on neurons and 
+I fill it following the idea that the first 10000 are excitatory and the rest 
+are inhibitory. Then connections are made. Finally, for each time step, each 
+neuron is updated and it's id and step at which he spikes is written in a file,
+if it's number of spikes is bigger than 0.
+
+I created, with the code given on the Moodle a document called pythonScript.py
+which is necessary to run the project and obtain the graphs on Juyter.
