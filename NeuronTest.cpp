@@ -48,7 +48,7 @@ int main()
 		
 	}
 	
-	//system("python pythonScript.py");
+	system("python pythonScript.py");
 	
 	return 0;
 }
