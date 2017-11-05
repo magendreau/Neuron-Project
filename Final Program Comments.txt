@@ -1,0 +1,19 @@
+Final Program comments:
+In this version I didn't change muh compared to the one with many neurons.
+The main difference is that I created a class Nerwork in which I do some
+things that were previously done either in the main file or in neuron.cpp.
+The class Network is used to create all neurons that compose the network 
+and to create random connections between them. 
+So I first initialized and declared an array neurons in the main and now
+it's an attribute of the class Network that has a size of 12500.
+This class contains also a getter and the function instaureConnections that
+was previously in neuron.cpp. This function does the same as before but 
+with an extra for loop to do it for each neuron of neurons.
+When I initialize neurons I put first 10000 excitatory neurons and then 
+2500 inhibitory ones.
+
+As a result, I declare a network in the main and call each function (to 
+initialize and to make connections) before the while.
+I had troubles with the speed of my program so instead of a for loop with
+indexes I changed for a for auto declaring a variable that increases each
+time to replace the index of the array, which is the neuron number/id.
