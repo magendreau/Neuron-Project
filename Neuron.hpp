@@ -18,7 +18,7 @@ constexpr double theta(20.0); //!< thresold limit
 constexpr double t_stop(500.0); //!< number of steps of simulation, as h=0.1, the time of simulation is here 500 ms (t=n*h)
 constexpr unsigned long n_stop(t_stop/h); //!< Maximal number of steps of the simulation based on time
 constexpr int D(15); //!< delay before the spike is treated by the neuron
-constexpr int g(5); //!< relative strenghts of connections g=J_inhibitory/J_excitatory
+constexpr double g(5.0); //!< relative strenghts of connections g=J_inhibitory/J_excitatory
 constexpr double J_excitatory(0.1); //!< amplitude of the spike, equal for all synapses
 constexpr double J_inhibitory(g*J_excitatory); //!< amplitude of the spike, equal for all synapses
 
