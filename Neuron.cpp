@@ -136,7 +136,6 @@ void Neuron::update(unsigned long step, double I, bool recep, bool test)
 		} else if((membranePotential >= theta)) { //if the membrane potential reaches the thresold
 			if(!recep) { //if the neuron is not receiving 
 				spikesOccured = clock*h; //a spike is emitted
-				//cout << "A spike occured at t=" << spikesOccured << " ms" << endl;
 				++spikes;
 				spike = true;
 				fillRingBufferOfTargets(step);  //as the number of spikes increased ( the neuron spiked) 

@@ -18,7 +18,7 @@ constexpr double theta(20.0); //!< thresold limit
 constexpr double t_stop(500.0); //!< number of steps of simulation, as h=0.1, the time of simulation is here 500 ms (t=n*h)
 constexpr unsigned long n_stop(t_stop/h); //!< Maximal number of steps of the simulation based on time
 constexpr int D(15); //!< delay before the spike is treated by the neuron
-constexpr double g(5.0); //!< relative strenghts of connections g=J_inhibitory/J_excitatory
+constexpr double g(6.0); //!< relative strenghts of connections g=J_inhibitory/J_excitatory
 constexpr double J_excitatory(0.1); //!< amplitude of the spike, equal for all synapses
 constexpr double J_inhibitory(g*J_excitatory); //!< amplitude of the spike, equal for all synapses
 
@@ -33,11 +33,11 @@ constexpr unsigned long inhibitoryNeurons(2500); //!< number of inhibitory neuro
 constexpr unsigned long excitatoryConnections(1000); //!< number of excitatory connections a neurons receives
 constexpr unsigned long inhibitoryConnections(250); //!< number of inhibitory connections a neurons receives
 
-constexpr int etha(2); //!< value of externalFrequency over thresold frequency 
+constexpr int etha(4); //!< value of externalFrequency over thresold frequency 
 constexpr double externalFrequency((etha/0.1)*h); //!< rate at which a neuron receives a random spike
  
-/*! \file Neuron.hpp
- * states in which the neuron can be
+/*! @file Neuron.hpp
+ * states in which the neuron can be (refractory or inhibitory)
 */
 enum State {REFRACTORY, NON_REFRACTORY}; 
 
