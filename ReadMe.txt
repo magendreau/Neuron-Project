@@ -25,5 +25,13 @@ My program is a bit slow for the update part of the main.
 
 Using the program:
 
-Some variables declared as const expr can be changed to get another image or plot.
+Some variables declared as const expr can be changed to get another image or plot:
+  - to get image (a) set:
+etha = 2 and g = 3
+  - to get image (b) set:
+etha = 4 and g=6
+  - to get image (c) set:
+etha = 2 and g= 5 (default setting of the program)
+  - to get image (d) set:
+etha = 0.8 and g = 4.5
 
